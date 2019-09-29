@@ -1,0 +1,47 @@
+{
+    "name": "amenophis/elasticsearch",
+    "description": "Elasticsearch utilities",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jérémy Leherpeur",
+            "email": "amenophis@leherpeur.net"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Amenophis\\Elasticsearch\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\Amenophis\\Elasticsearch\\": "tests/"
+        }
+    },
+    "require": {
+        "php": "^7.3",
+        "elasticsearch/elasticsearch": "^7.0"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^2.15",
+        "phpunit/phpunit": "^8.3",
+        "symfony/dependency-injection": "^4.3",
+        "symfony/http-kernel": "^4.3",
+        "symfony/config": "^4.3",
+        "symfony/var-dumper": "^4.3",
+        "symfony/yaml": "^4.3"
+    },
+    "suggest": {
+        "symfony/framework-bundle": "If you want to use the Symfony Bridge bundle"
+    },
+    "config": {
+        "bin-dir": "bin/",
+        "sort-packages": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.x-dev"
+        }
+    }
+}
