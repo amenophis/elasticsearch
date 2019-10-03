@@ -11,7 +11,7 @@ class Configuration implements ConfigurationInterface
 {
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder('elasticsearch');
+        $treeBuilder = new TreeBuilder('amenophis_elasticsearch');
 
         $treeBuilder->getRootNode()
             ->children()

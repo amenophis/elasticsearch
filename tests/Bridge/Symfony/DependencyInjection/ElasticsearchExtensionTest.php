@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Amenophis\Elasticsearch\Bridge\Symfony\DependencyInjection;
 
-use Amenophis\Elasticsearch\Bridge\Symfony\DependencyInjection\ElasticsearchExtension;
+use Amenophis\Elasticsearch\Bridge\Symfony\DependencyInjection\AmenophisElasticsearchExtension;
 use Elasticsearch\Client;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -15,7 +15,7 @@ class ElasticsearchExtensionTest extends TestCase
 {
     public function testEmptyConfigLoad()
     {
-        $extension = new ElasticsearchExtension();
+        $extension = new AmenophisElasticsearchExtension();
         $config = array();
         $extension->load(array($config), $container = $this->getContainer());
         $this->assertArrayNotHasKey('elasticsearch.clients', $container->getDefinitions());
@@ -23,7 +23,7 @@ class ElasticsearchExtensionTest extends TestCase
 
     public function testClientsConfiguration()
     {
-        $extension = new ElasticsearchExtension();
+        $extension = new AmenophisElasticsearchExtension();
         $config = $this->parseYaml($this->getYamlConfig());
         $extension->load(array($config), $container = $this->getContainer());
 
