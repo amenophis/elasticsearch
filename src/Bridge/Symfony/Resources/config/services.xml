@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <defaults public="false" autowire="false" autoconfigure="false" />
+
+        <service id="amenophis_elasticsearch.bridge.symfony.client_collection" class="Amenophis\Elasticsearch\Bridge\Symfony\ClientCollection">
+            <argument type="tagged_locator" tag="amenophis.client" index-by="key" />
+        </service>
+
+        <!-- Commands -->
+        <service id="amenophis_elasticsearch.bridge.symfony.client_info_command" class="Amenophis\Elasticsearch\Bridge\Symfony\Command\ClientInfoCommand">
+            <argument type="service" id="amenophis_elasticsearch.bridge.symfony.client_collection" />
+            <tag name="console.command" />
+        </service>
+    </services>
+</container>
