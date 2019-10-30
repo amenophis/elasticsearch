@@ -11,7 +11,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 use Symfony\Component\Yaml\Parser;
 
-class ElasticsearchExtensionTest extends TestCase
+class AmenophisElasticsearchExtensionTest extends TestCase
 {
     public function testEmptyConfigLoad()
     {
@@ -30,6 +30,42 @@ class ElasticsearchExtensionTest extends TestCase
         $this->assertTrue($container->hasDefinition('amenophis.client.single'));
         $this->assertTrue($container->hasDefinition('amenophis.client.single_array'));
         $this->assertTrue($container->hasDefinition('amenophis.client.multiple'));
+
+        $singleDefinition = $container->getDefinition('amenophis.client.single');
+        $this->assertSame(
+            [
+                'amenophis.client' => [
+                    [
+                        'key' => 'single'
+                    ]
+                ]
+            ],
+            $singleDefinition->getTags()
+        );
+
+        $singleArrayDefinition = $container->getDefinition('amenophis.client.single_array');
+        $this->assertSame(
+            [
+                'amenophis.client' => [
+                    [
+                        'key' => 'single_array'
+                    ]
+                ]
+            ],
+            $singleArrayDefinition->getTags()
+        );
+
+        $multipleDefinition = $container->getDefinition('amenophis.client.multiple');
+        $this->assertSame(
+            [
+                'amenophis.client' => [
+                    [
+                        'key' => 'multiple'
+                    ]
+                ]
+            ],
+            $multipleDefinition->getTags()
+        );
 
         $this->assertArrayHasKey(Client::class.' $singleClient', $container->getAliases());
         $this->assertArrayHasKey(Client::class.' $singleArrayClient', $container->getAliases());

@@ -25,6 +25,15 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end() // clients
+                ->arrayNode('indices')
+                    ->arrayPrototype()
+                        ->children()
+                            ->scalarNode('client')->end()
+                            ->variableNode('settings')->end()
+                            ->variableNode('mapping')->end()
+                        ->end()
+                    ->end()
+                ->end() // indices
             ->end()
         ;
 
