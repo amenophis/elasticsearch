@@ -71,6 +71,10 @@ class ClientInfoCommand extends Command
 
         $client = $this->clientCollection->get($clientName);
 
+        if (!$client->ping()) {
+            $output->error('No alive nodes found in your cluster');
+        }
+
         $info = $client->info();
         $indices = $client->indices()->get(['index' => '*']);
 
@@ -78,9 +82,20 @@ class ClientInfoCommand extends Command
             ['version', $info['version']['number']],
             ['lucene version', $info['version']['lucene_version']],
             ['cluster uuid', $info['cluster_uuid']],
-            ['indices', 0 === \count($indices) ? '-' : sprintf('"%s"', implode('", "', array_keys($indices)))],
+            ['indices', $this->formatList(array_keys($indices))],
         ];
 
         $output->table([], $infos);
+    }
+
+    private function formatList(array $elements, string $separator = ',', string $arround = '"', string $emptyResult = '-')
+    {
+        if (0 === \count($elements)) {
+            return $emptyResult;
+        }
+
+        $glue = sprintf('%s%s %s', $arround, $separator, $arround);
+
+        return sprintf('%s%s%s', $arround, implode($glue, $elements), $arround);
     }
 }

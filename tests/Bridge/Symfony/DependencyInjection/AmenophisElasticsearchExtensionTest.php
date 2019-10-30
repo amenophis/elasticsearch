@@ -11,7 +11,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 use Symfony\Component\Yaml\Parser;
 
-class ElasticsearchExtensionTest extends TestCase
+class AmenophisElasticsearchExtensionTest extends TestCase
 {
     public function testEmptyConfigLoad()
     {

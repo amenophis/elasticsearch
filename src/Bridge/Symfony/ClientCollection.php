@@ -6,20 +6,20 @@ namespace Amenophis\Elasticsearch\Bridge\Symfony;
 
 use Amenophis\Elasticsearch\Bridge\Symfony\Exception\ClientNotFound;
 use Elasticsearch\Client;
-use Symfony\Component\DependencyInjection\ServiceLocator;
+use Symfony\Contracts\Service\ServiceProviderInterface;
 
 class ClientCollection
 {
-    private $clientLocator;
+    private $serviceProvider;
 
-    public function __construct(ServiceLocator $clientLocator)
+    public function __construct(ServiceProviderInterface $serviceProvider)
     {
-        $this->clientLocator = $clientLocator;
+        $this->serviceProvider = $serviceProvider;
     }
 
     public function has(string $clientName): bool
     {
-        return $this->clientLocator->has($clientName);
+        return $this->serviceProvider->has($clientName);
     }
 
     /**
@@ -27,11 +27,11 @@ class ClientCollection
      */
     public function get(string $clientName): Client
     {
-        if (!$this->clientLocator->has($clientName)) {
+        if (!$this->serviceProvider->has($clientName)) {
             throw new ClientNotFound($clientName);
         }
 
-        return $this->clientLocator->get($clientName);
+        return $this->serviceProvider->get($clientName);
     }
 
     /**
@@ -39,8 +39,8 @@ class ClientCollection
      */
     public function all(): \Generator
     {
-        foreach ($this->clientLocator->getProvidedServices() as $clientName => $clientClass) {
-            yield $clientName => $this->clientLocator->get($clientName);
+        foreach ($this->serviceProvider->getProvidedServices() as $clientName => $clientClass) {
+            yield $clientName => $this->serviceProvider->get($clientName);
         }
     }
 }
