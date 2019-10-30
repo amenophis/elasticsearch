@@ -8,6 +8,9 @@ use Amenophis\Elasticsearch\Bridge\Symfony\Exception\ClientNotFound;
 use Elasticsearch\Client;
 use Symfony\Contracts\Service\ServiceProviderInterface;
 
+/**
+ * @internal
+ */
 class ClientCollection
 {
     private $serviceProvider;
