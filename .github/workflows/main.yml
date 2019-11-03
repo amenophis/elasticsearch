@@ -13,6 +13,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v1
+      - name: Run elasticsearch
+        run: docker-compose up -d es
       - name: Setup PHP
         uses: shivammathur/setup-php@master
         with:
@@ -27,6 +29,8 @@ jobs:
         run: php -m
       - name: Composer update
         run: composer update ${{ matrix.composer }} --no-progress
-      - name: Unit tests
+      - name: Wait for elasticsearch
+        run: bin/wait-for-elasticsearch.sh localhost:9200
+      - name: Run tests
         continue-on-error: ${{ matrix.php-versions == 7.4 }}
         run: php -d xdebug.profiler_enable=off bin/phpunit tests

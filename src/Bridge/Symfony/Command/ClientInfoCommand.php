@@ -13,6 +13,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class ClientInfoCommand extends Command
 {
+    protected static $defaultName = 'amenophis:debug:client';
     /**
      * @var ClientCollection
      */
@@ -25,34 +26,13 @@ class ClientInfoCommand extends Command
         $this->clientCollection = $clientCollection;
     }
 
-    protected static $defaultName = 'amenophis:debug:client';
-
-    protected function configure()
-    {
-        $this
-            ->addArgument('client-name', InputArgument::OPTIONAL, 'Show details on the client if argument is provided.')
-        ;
-    }
-
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
-        $output = new SymfonyStyle($input, $output);
-        $clientName = $input->getArgument('client-name');
-
-        if (null !== $clientName) {
-            $this->showClientDetail($output, $clientName);
-        } else {
-            $this->showClientSummary($output);
-        }
-    }
-
     public function showClientSummary(SymfonyStyle $output): void
     {
         $output->title('Elasticsearch clients');
 
         $clientStatus = [];
         foreach ($this->clientCollection->all() as $clientName => $client) {
-            $connected = $client->ping() ? 'Connected' : 'Not connected';
+            $connected      = $client->ping() ? 'Connected' : 'Not connected';
             $clientStatus[] = [$clientName, $connected];
         }
 
@@ -75,7 +55,7 @@ class ClientInfoCommand extends Command
             $output->error('No alive nodes found in your cluster');
         }
 
-        $info = $client->info();
+        $info    = $client->info();
         $indices = $client->indices()->get(['index' => '*']);
 
         $infos = [
@@ -86,6 +66,25 @@ class ClientInfoCommand extends Command
         ];
 
         $output->table([], $infos);
+    }
+
+    protected function configure()
+    {
+        $this
+            ->addArgument('client-name', InputArgument::OPTIONAL, 'Show details on the client if argument is provided.')
+        ;
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        $output     = new SymfonyStyle($input, $output);
+        $clientName = $input->getArgument('client-name');
+
+        if (null !== $clientName) {
+            $this->showClientDetail($output, $clientName);
+        } else {
+            $this->showClientSummary($output);
+        }
     }
 
     private function formatList(array $elements, string $separator = ',', string $arround = '"', string $emptyResult = '-')
