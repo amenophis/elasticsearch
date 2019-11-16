@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Amenophis\Elasticsearch\Bridge\Symfony;
 
-use Amenophis\Elasticsearch\Bridge\Symfony\Exception\ClientNotFound;
-use Elasticsearch\Client;
+use Amenophis\Elasticsearch\Bridge\Symfony\Exception\IndexNotFound;
+use Amenophis\Elasticsearch\Index;
 use Symfony\Contracts\Service\ServiceProviderInterface;
 
 /**
  * @internal
  */
-final class ClientCollection
+final class IndexCollection
 {
     private $serviceProvider;
 
@@ -20,30 +20,30 @@ final class ClientCollection
         $this->serviceProvider = $serviceProvider;
     }
 
-    public function has(string $clientName): bool
+    public function has(string $indexName): bool
     {
-        return $this->serviceProvider->has($clientName);
+        return $this->serviceProvider->has($indexName);
     }
 
     /**
-     * @throws ClientNotFound
+     * @throws IndexNotFound
      */
-    public function get(string $clientName): Client
+    public function get(string $clientName): Index
     {
         if (!$this->serviceProvider->has($clientName)) {
-            throw new ClientNotFound($clientName);
+            throw new IndexNotFound($clientName);
         }
 
         return $this->serviceProvider->get($clientName);
     }
 
     /**
-     * @return Client[]|\Generator
+     * @return \Generator|Index[]
      */
     public function all(): \Generator
     {
-        foreach ($this->serviceProvider->getProvidedServices() as $clientName => $clientClass) {
-            yield $clientName => $this->serviceProvider->get($clientName);
+        foreach ($this->serviceProvider->getProvidedServices() as $indexName => $indexClass) {
+            yield $indexName => $this->serviceProvider->get($indexName);
         }
     }
 }

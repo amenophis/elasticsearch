@@ -5,16 +5,33 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <defaults public="false" autowire="false" autoconfigure="false" />
+        <defaults public="false" autowire="false" autoconfigure="false"/>
 
-        <service id="amenophis_elasticsearch.bridge.symfony.client_collection" class="Amenophis\Elasticsearch\Bridge\Symfony\ClientCollection">
-            <argument type="tagged_locator" tag="amenophis.client" index-by="key" />
+        <!-- Collections -->
+        <service id="amenophis_elasticsearch.bridge.symfony.client_collection"
+                 class="Amenophis\Elasticsearch\Bridge\Symfony\ClientCollection">
+            <argument type="tagged_locator" tag="amenophis_elasticsearch.client" index-by="key"/>
+        </service>
+        <service id="amenophis_elasticsearch.bridge.symfony.index_builder_collection"
+                 class="Amenophis\Elasticsearch\Bridge\Symfony\IndexBuilderCollection">
+            <argument type="tagged_locator" tag="amenophis_elasticsearch.index_builder" index-by="key"/>
+        </service>
+        <service id="amenophis_elasticsearch.bridge.symfony.index_collection"
+                 class="Amenophis\Elasticsearch\Bridge\Symfony\IndexCollection">
+            <argument type="tagged_locator" tag="amenophis_elasticsearch.index" index-by="key"/>
         </service>
 
         <!-- Commands -->
-        <service id="amenophis_elasticsearch.bridge.symfony.client_info_command" class="Amenophis\Elasticsearch\Bridge\Symfony\Command\ClientInfoCommand">
-            <argument type="service" id="amenophis_elasticsearch.bridge.symfony.client_collection" />
-            <tag name="console.command" />
+        <service id="amenophis_elasticsearch.bridge.symfony.client_info_command"
+                 class="Amenophis\Elasticsearch\Bridge\Symfony\Command\ClientInfoCommand">
+            <argument type="service" id="amenophis_elasticsearch.bridge.symfony.client_collection"/>
+            <tag name="console.command"/>
+        </service>
+        <service id="amenophis_elasticsearch.bridge.symfony.index_migrate_command"
+                 class="Amenophis\Elasticsearch\Bridge\Symfony\Command\IndexMigrateCommand">
+            <argument type="service" id="amenophis_elasticsearch.bridge.symfony.index_collection"/>
+            <argument type="service" id="amenophis_elasticsearch.bridge.symfony.index_builder_collection"/>
+            <tag name="console.command"/>
         </service>
     </services>
 </container>

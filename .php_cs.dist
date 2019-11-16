@@ -1,32 +1,27 @@
 <?php
 
-if (!file_exists(__DIR__.'/src')) {
-    exit(0);
-}
+$finder = PhpCsFixer\Finder::create()
+    ->in(__DIR__)
+    ->in(__DIR__.'/src')
+    ->in(__DIR__.'/tests')
+    ->append([__FILE__])
+;
 
 return PhpCsFixer\Config::create()
     ->setRules([
-        '@Symfony' => true,
-        '@Symfony:risky' => true,
-        '@PHPUnit75Migration:risky' => true,
-        'php_unit_dedicate_assert' => ['target' => '5.6'],
-        'phpdoc_no_empty_return' => false, // triggers almost always false positive
-        'array_syntax' => ['syntax' => 'short'],
-        'fopen_flags' => false,
-        'ordered_imports' => true,
-        'phpdoc_trim_consecutive_blank_line_separation' => true,
-        'no_superfluous_phpdoc_tags' => ['allow_mixed' => true],
-        'protected_to_private' => false,
-        // Part of @Symfony:risky in PHP-CS-Fixer 2.13.0. To be removed from the config file once upgrading
-        'native_function_invocation' => ['include' => ['@compiler_optimized'], 'scope' => 'namespaced', 'strict' => true],
-        // Part of future @Symfony ruleset in PHP-CS-Fixer To be removed from the config file once upgrading
-        'phpdoc_types_order' => ['null_adjustment' => 'always_last', 'sort_algorithm' => 'none'],
-        'combine_nested_dirname' => true,
+        '@PHPUnit75Migration:risky'              => true,
+        '@PhpCsFixer'                            => true,
+        '@PhpCsFixer:risky'                      => true,
+        'array_syntax'                           => ['syntax' => 'short'],
+        'ordered_imports'                        => true,
+        'no_superfluous_phpdoc_tags'             => ['allow_mixed' => false],
+        'binary_operator_spaces'                 => ['default' => 'align_single_space_minimal'],
+        'php_unit_test_class_requires_covers'    => false,
+        'php_unit_internal_class'                => false,
+        'php_unit_test_case_static_method_calls' => [
+            'call_type' => 'this',
+        ],
     ])
     ->setRiskyAllowed(true)
-    ->setFinder(
-        PhpCsFixer\Finder::create()
-            ->in(__DIR__.'/src')
-            ->append([__FILE__])
-    )
+    ->setFinder($finder)
 ;

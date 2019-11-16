@@ -19,7 +19,7 @@ class Configuration implements ConfigurationInterface
                     ->arrayPrototype()
                         ->children()
                             ->arrayNode('hosts')
-                            ->beforeNormalization()->ifString()->then(function ($v) { return [$v]; })->end()
+                            ->beforeNormalization()->castToArray()->end()
                                 ->prototype('scalar')->end()
                             ->end()
                         ->end()
@@ -30,7 +30,7 @@ class Configuration implements ConfigurationInterface
                         ->children()
                             ->scalarNode('client')->end()
                             ->variableNode('settings')->end()
-                            ->variableNode('mapping')->end()
+                            ->variableNode('mappings')->end()
                         ->end()
                     ->end()
                 ->end() // indices

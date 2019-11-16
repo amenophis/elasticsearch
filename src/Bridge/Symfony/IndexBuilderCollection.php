@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Amenophis\Elasticsearch\Bridge\Symfony;
 
-use Amenophis\Elasticsearch\Bridge\Symfony\Exception\ClientNotFound;
-use Elasticsearch\Client;
+use Amenophis\Elasticsearch\Bridge\Symfony\Exception\IndexBuilderNotFound;
+use Amenophis\Elasticsearch\IndexBuilder;
 use Symfony\Contracts\Service\ServiceProviderInterface;
 
 /**
  * @internal
  */
-final class ClientCollection
+final class IndexBuilderCollection
 {
     private $serviceProvider;
 
@@ -26,19 +26,19 @@ final class ClientCollection
     }
 
     /**
-     * @throws ClientNotFound
+     * @throws IndexBuilderNotFound
      */
-    public function get(string $clientName): Client
+    public function get(string $clientName): IndexBuilder
     {
         if (!$this->serviceProvider->has($clientName)) {
-            throw new ClientNotFound($clientName);
+            throw new IndexBuilderNotFound($clientName);
         }
 
         return $this->serviceProvider->get($clientName);
     }
 
     /**
-     * @return Client[]|\Generator
+     * @return \Generator|IndexBuilder[]
      */
     public function all(): \Generator
     {

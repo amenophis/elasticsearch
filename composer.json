@@ -21,14 +21,15 @@
     },
     "require": {
         "php": "^7.3",
-        "elasticsearch/elasticsearch": "^7.0"
+        "elasticsearch/elasticsearch": "^7.3",
+        "guzzlehttp/ringphp": "^1.1.1",
+        "react/promise": "^2.3"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.15",
-        "phpunit/phpunit": "^8.3",
-        "symfony/dependency-injection": "^4.3",
-        "symfony/http-kernel": "^4.3",
-        "symfony/config": "^4.3",
+        "phpunit/phpunit": "^8.4",
+        "phpspec/prophecy": "^1.9.0",
+        "symfony/framework-bundle": "^4.3",
         "symfony/var-dumper": "^4.3",
         "symfony/yaml": "^4.3"
     },
