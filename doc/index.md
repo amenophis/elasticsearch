@@ -13,8 +13,8 @@
 ```bash
 $ composer require amenophis/elasticsearch ^1.0@dev
 ```
-### Configuring in a Symfony Flex application
-You must to register the bundle in the `config/bundles.php`:
+## Configuration
+Register the bundle in the `config/bundles.php`:
 ```php
 <?php
 
@@ -25,7 +25,7 @@ return [
 ];
 ```
 
-You must also create the bundle configuration file `config/packages/amenophis_elasticsearch.yaml`:
+Create bundle configuration file `config/packages/amenophis_elasticsearch.yaml`:
 ```yaml
 amenophis_elasticsearch:
   clients:
@@ -46,11 +46,9 @@ amenophis_elasticsearch:
 
 ```
 
-That's all !
-
 ## Usage
 ### Configuration debug
-You can use the `bin/console amenophis:debug:client` command to show configured clients and the status of the connection:
+Use `bin/console amenophis:debug:client` command to show configured clients and the status of the connection:
 ```bash
 $ bin/console amenophis:debug:client
 Elasticsearch clients
@@ -72,7 +70,7 @@ name   info
 main   Connected
 ```
 
-You can also add the client name as argument of the previous command to sho more details:
+You can also add the client name as argument of the previous command to show more details:
 ```bash
 $ bin/console amenophis:debug:client main
 
@@ -88,7 +86,7 @@ Elasticsearch "main"
 ```
 
 ### Index migration
-You can use the `bin/console amenophis:index:migrate` command to run index the migration.
+Use `bin/console amenophis:index:migrate` command to run index migration.
 The command takes two arguments `client` and `index`:
 ```bash
 $ bin/console amenophis:index:migrate main posts
