@@ -14,7 +14,7 @@
 $ composer require amenophis/elasticsearch ^1.0@dev
 ```
 ## Configuration
-Register the bundle in the `config/bundles.php`:
+Register the bundle in `config/bundles.php`:
 ```php
 <?php
 
